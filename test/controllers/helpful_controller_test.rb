@@ -2,8 +2,11 @@ require 'test_helper'
 
 class Api::HelpfulControllerTest < ActionController::TestCase
   test "should get submit" do
-    get :submit
+    get :submit, guid: "12345", value: "true"
     assert_response :success
+    items = JSON.parse(response.body)
+    items["guid"].must_equal "12345"
+    items["value"].must_equal "true"
   end
 
   test "should get get" do

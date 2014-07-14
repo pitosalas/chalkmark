@@ -4,7 +4,6 @@ class CreateHelpfuls < ActiveRecord::Migration
       t.references :user, index: true
       t.string :url
       t.boolean :value
-
       t.timestamps
     end
   end
