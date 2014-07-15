@@ -14,13 +14,13 @@ class HelpfulTest < ActiveSupport::TestCase
 
   describe Helpful do
     it "can detect existance" do
-      Helpful.exists?(an_email: "abc@gmail.com", 
-                      a_url: "http://www.salas.com/foobar").must_equal true
+      Helpful.exists?(email: "abc@gmail.com", 
+                      url: "http://www.salas.com/foobar").must_equal true
     end
 
     it "correctly returns value" do
-      helprec = Helpful.defaulted_find(an_email: "abc@gmail.com", 
-                  a_url: "http://www.salas.com/foobar")
+      helprec = Helpful.defaulted_find(email: "abc@gmail.com", 
+                  url: "http://www.salas.com/foobar")
       helprec[0].value.must_equal true
     end
   end

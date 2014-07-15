@@ -49,4 +49,11 @@ gem 'minitest-rails'
 gem 'minitest-rails-capybara'
 gem 'database_cleaner'
 
+gem 'rails_12factor', group: :production
+gem 'pg', group: :production
+
+ruby "2.1.1"
+
+
+
 
