@@ -23,5 +23,24 @@ class HelpfulTest < ActiveSupport::TestCase
                   url: "http://www.salas.com/foobar")
       helprec[0].value.must_equal true
     end
+
+    it "correctly adds a new user" do
+      assert_difference 'User.count' do
+        Helpful.voted?(ip: "1.1.1.1", url: "http://www.salas.com/bar")
+      end
+    end
+
+    it "correctly does not add a new user" do
+      User.create(email:"pitosalas@gmail.com")
+      assert_difference 'User.count', 0 do
+        Helpful.voted?(email:"pitosalas@gmail.com", url: "http://www.salas.com/bar")
+      end
+    end
+
+    it "should record a new vote" do
+      assert_difference 'Helpful.count' do
+        Helpful.vote(true, email:"pitosalas@gmail.com", url: "http://www.salas.com/bar")
+      end
+    end
   end
 end

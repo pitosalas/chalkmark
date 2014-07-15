@@ -43,6 +43,7 @@ group :development do
 end
   
 gem 'byebug'                        # Better debugger (supposedly)
+gem 'pry-byebug'
 gem 'better_errors'                 # Better Errors replaces the standard Rails error page with a much better and more useful error page. It is also usable outside of Rails in any Rack app as Rack middleware.
 gem 'rails_admin'                   # Pretty cool free admin
 gem 'minitest-rails'
