@@ -16,7 +16,7 @@ module Api
       new_params.symbolize_keys!
       new_params = clean_params(new_params, [:url, :guid, :ip, :email])
       stats = Helpful.vote_and_get_stats(value, new_params)
-      render json: helpful
+      render json: stats
     end
 
     #
