@@ -39,7 +39,7 @@ class HelpfulTest < ActiveSupport::TestCase
 
     it "should record a new vote" do
       assert_difference 'Helpful.count' do
-        Helpful.vote(true, email:"pitosalas@gmail.com", url: "http://www.salas.com/bar")
+        Helpful.vote(value: true, email:"pitosalas@gmail.com", url: "http://www.salas.com/bar")
       end
     end
   end

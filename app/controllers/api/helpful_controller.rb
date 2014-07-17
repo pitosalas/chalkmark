@@ -10,10 +10,9 @@ module Api
     # email = an email address to identify user
     # value = yes/no to indicate whether the page is helpful
     def submit
-      new_params = clean_params(new_params, [:url, :guid, :ip, :email])
       stats = Helpful.vote_and_get_stats(
-        value: value(params), url: url(url), 
-        ip: ip(params), guid: guid(params), email: email(params))
+        value: value(params), url: url(params), 
+        ip: ip(request), guid: guid(params), email: email(params))
       render json: stats, callback: callback(params)
     end
 
@@ -26,8 +25,8 @@ module Api
     # value = yes/no to indicate whether the page is helpful
     def get
       resp = Helpful.voted?(
-        url: url(url), 
-        ip: ip(params), guid: guid(params), email: email(params))
+        url: url(params), 
+        ip: ip(request), guid: guid(params), email: email(params))
       render json: resp, callback: callback(params)
     end
 
@@ -57,7 +56,9 @@ module Api
       params['email']
     end
 
-
+    def guid params
+      params['guid']
+    end
 
   end
 end
