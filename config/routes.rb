@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
+  get 'status/index'
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   namespace :api, defaults: {format: :json} do
     get 'helpful' => 'helpful#get'
     post 'helpful' => 'helpful#submit'
   end
+
+  root 'status#index'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
