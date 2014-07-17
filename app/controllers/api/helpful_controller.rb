@@ -10,13 +10,11 @@ module Api
     # email = an email address to identify user
     # value = yes/no to indicate whether the page is helpful
     def submit
-      new_params = Hash[ip: request.headers["REMOTE-ADDR"]]
-      new_params = new_params.merge(params)
-      value = params.fetch(:value) == "true"
-      new_params.symbolize_keys!
       new_params = clean_params(new_params, [:url, :guid, :ip, :email])
-      stats = Helpful.vote_and_get_stats(value, new_params)
-      render json: stats
+      stats = Helpful.vote_and_get_stats(
+        value: value(params), url: url(url), 
+        ip: ip(params), guid: guid(params), email: email(params))
+      render json: stats, callback: callback(params)
     end
 
     #
@@ -27,12 +25,10 @@ module Api
     # email = an email address to identify user
     # value = yes/no to indicate whether the page is helpful
     def get
-      new_params = Hash[ip: request.headers["REMOTE-ADDR"]]
-      new_params = new_params.merge(params)
-      new_params.symbolize_keys!
-      new_params = clean_params(new_params, [:url, :guid, :ip, :email])
-      helpful = Helpful.voted?(new_params)
-      render json: helpful
+      resp = Helpful.voted?(
+        url: url(url), 
+        ip: ip(params), guid: guid(params), email: email(params))
+      render json: resp, callback: callback(params)
     end
 
     private
@@ -40,6 +36,28 @@ module Api
     def clean_params(params, valid_keys)
       params.keep_if { |key, value| valid_keys.include? key }
     end
+
+    def callback params
+      params.fetch('callback')
+    end
+
+    def ip request
+      request.headers["REMOTE-ADDR"]
+    end
+
+    def value params
+      ["yes", "YES", "y", "true", "TRUE", "t"].include? params["value"]
+    end
+
+    def url params
+      params.fetch('url')
+    end
+
+    def email params
+      params['email']
+    end
+
+
 
   end
 end
