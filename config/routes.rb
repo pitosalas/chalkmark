@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   namespace :api, defaults: {format: :json} do
-    get 'helpful' => 'helpful#get'
-    post 'helpful' => 'helpful#submit'
+    get 'helpful/voted' => 'helpful#voted'
+    get 'helpful/vote' => 'helpful#vote'
+    get 'helpful/visiting' => 'helpful#visiting'
   end
 
   root 'status#index'

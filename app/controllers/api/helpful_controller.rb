@@ -3,13 +3,13 @@ module Api
     skip_before_action :verify_authenticity_token
 
     #
-    # POST helpful?value=yes&guid=12312312312&email=pitosalas@gmail.com
+    # GET helpful?value=yes&guid=12312312312&email=pitosalas@gmail.com
     #
     # url = the page in question
     # guid = a guid to identify this user
     # email = an email address to identify user
     # value = yes/no to indicate whether the page is helpful
-    def submit
+    def vote
       stats = Helpful.vote_and_get_stats(
         value: value(params), url: url(params), 
         ip: ip(request), guid: guid(params), email: email(params))
@@ -23,12 +23,23 @@ module Api
     # guid = a guid to identify this user
     # email = an email address to identify user
     # value = yes/no to indicate whether the page is helpful
-    def get
+    def voted
       resp = Helpful.voted?(
         url: url(params), 
         ip: ip(request), guid: guid(params), email: email(params))
       render json: resp, callback: callback(params)
     end
+
+    #
+    # GET helpful/visiting?url="xxx"
+    #
+    # url = the page in question
+    # Returns a hash: {true: 12, false: 2} to reflect how many yes and no votes
+    #   this page has seen so far.
+    def visiting
+      stats = resp = Helpful.get_stats(url(params))
+      render json: stats, callback: callback(params)
+    end      
 
     private
 
