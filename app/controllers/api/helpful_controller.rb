@@ -54,7 +54,7 @@ module Api
     end
 
     def ip request
-      request.headers["REMOTE-ADDR"]
+      request.remote_ip
     end
 
     def value params
