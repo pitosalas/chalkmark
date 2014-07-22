@@ -13,6 +13,7 @@ module Api
       stats = Helpful.vote_and_get_stats(
         value: value(params), url: url(params), 
         ip: ip(request), guid: guid(params), email: email(params))
+      puts "ip: #{ip(request)}"
       render json: stats, callback: callback(params)
     end
 
@@ -27,6 +28,7 @@ module Api
       resp = Helpful.voted?(
         url: url(params), 
         ip: ip(request), guid: guid(params), email: email(params))
+      puts "ip: #{ip(request)}"
       render json: resp, callback: callback(params)
     end
 
